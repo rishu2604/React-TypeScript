@@ -1,9 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import classes from "../styles/NewTodo.module.css";
+import { TodosContext } from "../store/todos-context";
 
-const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
+const NewTodo: React.FC = () => {
   // useRef is actually a generic type out of the box, so we can pass a type argument to it
   const todoTextIputRef = useRef<HTMLInputElement>(null);
+
+  const todosCtx = useContext(TodosContext);
 
   // event is an object that is passed by the browser to the event handler function
   const submitHandler = (event: React.FormEvent) => {
@@ -21,7 +24,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
       return;
     }
 
-    props.onAddTodo(enteredText);
+    todosCtx.addTodo(enteredText);
   };
   return (
     <form onSubmit={submitHandler} className={classes.form}>
